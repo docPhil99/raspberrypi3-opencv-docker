@@ -2,7 +2,7 @@
 
 ## About
 The Git repo of an [OpenCV](https://opencv.org/) [Docker image](https://hub.docker.com/r/mohaseeb/raspberrypi3-python-opencv/)
-, for Raspberry Pi 3 with Raspbian OS (Debian). The modules from OpenCV 
+, for Raspberry Pi 4 with Raspbian OS (Debian). The modules from OpenCV 
 contrib are included as well.  It is based on [the resin.io python image](https://hub.docker.com/r/resin/raspberrypi3-python/).
 
 ## Usage
@@ -15,13 +15,16 @@ If you prefer to build the image yourself (takes around 2 hours), you can do it 
 instructions.
 * Clone this repository into your Raspberry Pi.
 ```commandline
-git clone git@github.com:mohaseeb/raspberrypi3-opencv-docker.git
+git clone https://github.com/docPhil99/raspberrypi3-opencv-docker.git
 ```
 * Build the image as follows (assumes you want to build the image for OpenvCV 4.1.0):
 ```commandline
 cd raspberrypi3-opencv-docker/opencv_4/4.1.0/
 docker build -t my_pi_opencv_img .
 ```
+
+__NB 3.4.1 has been updated to use python 3.10. Others maybe out of date 2.7__
+
 * And run it
 ```commandline
 docker run -it --rm \

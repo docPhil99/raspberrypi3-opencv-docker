@@ -1,4 +1,4 @@
-FROM resin/raspberrypi3-python:2.7
+FROM  arm32v7/python:buster
 
 # Install dependencies needed for building and running OpenCV
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     build-essential cmake pkg-config \
     # to work with images
-    libjpeg-dev libtiff-dev libjasper-dev libpng-dev \
+    libjpeg-dev libtiff-dev libpng-dev \
     # to work with videos
     libavcodec-dev libavformat-dev libswscale-dev libv4l-dev \
     # needed by highgui tool
@@ -35,4 +35,9 @@ RUN pip install --no-cache-dir \
 
 # Install OpenCV
 COPY download_build_install_opencv.sh download_build_install_opencv.sh
+COPY test.sh test.sh
+COPY cv2.patch cv2.patch
+#COPY clean.sh clean.sh
 RUN ./download_build_install_opencv.sh
+#RUN ./test.sh
+#RUN ./clean.sh

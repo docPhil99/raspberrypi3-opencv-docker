@@ -2,7 +2,7 @@
 
 OPENCV_VERSION=3.4.1
 
-WS_DIR=`pwd`
+export WS_DIR=`pwd`
 mkdir opencv
 cd opencv
 
@@ -17,6 +17,8 @@ rm -rf opencv_contrib.zip
 
 OPENCV_SRC_DIR=`pwd`/opencv-$OPENCV_VERSION
 OPENCV_CONTRIB_MODULES_SRC_DIR=`pwd`/opencv_contrib-$OPENCV_VERSION/modules
+#patch
+patch -u -b $OPENCV_SRC_DIR/modules/python/src2/cv2.cpp cv2.patch
 
 # build and install
 cd $OPENCV_SRC_DIR
@@ -26,25 +28,9 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
   -D OPENCV_EXTRA_MODULES_PATH=$OPENCV_CONTRIB_MODULES_SRC_DIR \
   ..
 
+
 make -j4			
 
 make install
 ldconfig
-
-# verify the installation is successful
-python -c "import cv2; print('Installed OpenCV version is: {} :)'.format(cv2.__version__))"
-if [ $? -eq 0 ]; then
-    echo "OpenCV installed successfully! ........................."
-else
-    echo "OpenCV installation failed :( ........................."
-    SITE_PACKAGES_DIR=/usr/local/lib/python2.7/site-packages
-    echo "$SITE_PACKAGES_DIR contents: "
-    echo `ls -ltrh $SITE_PACKAGES_DIR`
-    echo "Note: temporary installation dir $WS_DIR/opencv is not removed!"
-    exit 1
-fi
-
-# cleanup
-cd $WS_DIR
-rm -rf opencv
 
